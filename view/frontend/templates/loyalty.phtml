@@ -1,0 +1,22 @@
+<?php
+$blockObj = $block->getLayout()->createBlock('RoeTech\GiftCard\Block\Loyalty');
+?>
+
+
+
+<div id="loyalty-program">
+   
+    <div>
+        <h4><?= $block->escapeHtml(__('Loyalty card')); ?></h4>
+        <p><?= $block->escapeHtml(__('Enter your Great Outdoors loyalty card number here:')) ?></p>
+    </div>
+    <div>
+        
+    <form action="<?= $blockObj->getFormAction(); ?>" method="post" class="giftcard-form">
+        <input type="text" title="Loyalty Card" id="loyalty_code" name="loyalty_code" placeholder="<?= $block->escapeHtml(__('Loyalty code')); ?>">
+
+        <button type="submit" title="apply discount" value="<?= $block->escapeHtml(__('apply discount')); ?>">
+            <span><span>apply discount</span></span>
+        </button>        
+    </form>       
+</div>

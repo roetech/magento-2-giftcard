@@ -1,0 +1,57 @@
+<?php
+$blockObj= $block->getLayout()->createBlock('RoeTech\GiftCard\Block\Balance');
+?>
+<p>&nbsp</p>
+<?php if($giftCardBalance = $blockObj->getGiftCardBalance()): ?>
+    <div class="giftcard-balance">
+        <?= $block->escapeHtml(__('Your giftcard balance is &euro;')) . $giftCardBalance; ?>
+    </div>
+<?php endif; ?>
+
+<p><?= $block->escapeHtml(__('Enter your Gift Card number below plus your PIN, and we’ll tell you what the balance is on your gift card.')) ?></p>
+<div class="left">
+
+
+
+
+
+	<form action="/shop/giftcard/balance/view" method="post" id="checkbalance" class="giftcard-form">
+	    <p><input type="text" title="Gift Card Number" id="giftcard_code" name="giftcard_code" placeholder="<?= $block->escapeHtml(__('Gift Card Number')) ?>" required></p>
+
+		<p><input type="text" title="PIN Number" id="giftcard_pin" name="giftcard_pin" placeholder="<?= $block->escapeHtml(__('PIN Number')) ?>" required></p>
+
+
+		<div class="recaptcha" style="overflow:hidden;position:relative; margin-bottom: 25px;">
+		   <input type="checkbox" id="recaptcha-verification-1" name="recaptcha-verification-1" value="" class="hide required-entry" style="display:none;" />
+		   <div id="recaptcha-1"></div>
+		   <script type="text/javascript">
+		       var onloadCallback = function() {
+		           grecaptcha.render('recaptcha-1', {
+		               'sitekey': "[RECAPTCHA_SITE_KEY]",
+		               'theme': "light",
+		           });
+		       	};
+		       	document.getElementById("checkbalance").addEventListener("submit",function(evt)
+		  		{
+			  		var response = grecaptcha.getResponse();
+			  		if(response.length == 0) 
+					{ 
+						//reCaptcha not verified
+				    	alert("Please Complete Google Recaptcha!"); 
+				    	evt.preventDefault();
+				    	return false;
+					}
+		  		});
+		   </script>
+		   <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en" async defer></script>
+		</div>
+
+
+		<button type="submit" title="view balance" class="button green" value="<?= $block->escapeHtml(__('view balance')) ?>"> 
+	    	<span><?= $block->escapeHtml(__('view balance')); ?></span>
+	    </button>
+	</form>
+</div>
+<div class="right">
+	<img src="<?php echo $block->getViewFileUrl('image/Gift-Card.png'); ?>" alt="Gift Card Design">
+</div>
